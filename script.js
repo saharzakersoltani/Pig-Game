@@ -2,64 +2,39 @@
 //  Selecting elements:
 const scoreEl0 = document.querySelector('#score--0');
 const scoreEl1 = document.querySelector('#score--1');
+const currentEl0 = document.getElementById('current--0');
+const currentEl1 = document.getElementById('current--1');
+const playerEl0 = document.querySelector('.player--0');
+const playerEl1 = document.querySelector('.player--1');
+
 const diceEl = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
-const currentEl0 = document.querySelector('#current--0');
-const currentEl1 = document.querySelector('#current--1');
 
 // to make scores 0 (starting condition)
 scoreEl0.textContent = '0';
 scoreEl1.textContent = '0';
-
-// to make the dice hidden (strting conditions)
 diceEl.classList.add('hidden');
+let currentScore = 0;
+let activePlayer = 0;
 
 // click on roll dice button (Rolling dice functionality)
-let currentScore = 0;
 btnRoll.addEventListener('click', function () {
   const randomNum = Math.floor(Math.random() * 6 + 1);
   diceEl.classList.remove('hidden');
-  diceEl.src = `dice-${randomNum}.png`;
+  diceEl.src = `dice-${randomNum}.png`; // LEARN HOW TO INSER IMAGE😍
   console.log(randomNum);
 
   if (randomNum !== 1) {
-    currentScore = currentScore + randomNum;
-    currentEl0.textContent = currentScore;
+    currentScore += randomNum;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   } else {
+    document.getElementById(`current--${activePlayer}`).textContent = '0';
+    currentScore = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0; //resign activePlayer by ternery operator.
+    playerEl0.classList.toggle('player--active');
+    playerEl1.classList.toggle('player--active'); // LEARN TOGGLE😍
   }
-  /*
-  // The second way to show dice image based on the rolling 😐
-  switch (randomNum) {
-    case 1:
-      console.log(randomNum);
-      diceElImage;
-      diceEl.src = 'dice-1.png';
-    case 2:
-      console.log(randomNum);
-      diceElImage;
-      diceEl.src = 'dice-2.png';
-      break;
-    case 3:
-      console.log(randomNum);
-      diceElImage;
-      diceEl.src = 'dice-3.png';
-      break;
-    case 4:
-      console.log(randomNum);
-      diceElImage;
-      diceEl.src = 'dice-4.png';
-      break;
-    case 5:
-      console.log(randomNum);
-      diceElImage;
-      diceEl.src = 'dice-5.png';
-      break;
-    case 6:
-      console.log(randomNum);
-      diceElImage;
-      diceEl.src = 'dice-6.png';
-      break;
-  }*/
 });
