@@ -18,12 +18,22 @@ scoreEl1.textContent = '0';
 diceEl.classList.add('hidden');
 let currentScore = 0;
 let activePlayer = 0;
+let scores = [0, 0];
+
+// switching player function
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = '0';
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0; //resign activePlayer by ternery operator.
+  playerEl0.classList.toggle('player--active');
+  playerEl1.classList.toggle('player--active'); // LEARN TOGGLE😍
+};
 
 // click on roll dice button (Rolling dice functionality)
 btnRoll.addEventListener('click', function () {
   const randomNum = Math.floor(Math.random() * 6 + 1);
   diceEl.classList.remove('hidden');
-  diceEl.src = `dice-${randomNum}.png`; // LEARN HOW TO INSER IMAGE😍
+  diceEl.src = `dice-${randomNum}.png`; // LEARN HOW TO INSERT IMAGE😍
   console.log(randomNum);
 
   if (randomNum !== 1) {
@@ -31,10 +41,24 @@ btnRoll.addEventListener('click', function () {
     document.getElementById(`current--${activePlayer}`).textContent =
       currentScore;
   } else {
-    document.getElementById(`current--${activePlayer}`).textContent = '0';
-    currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0; //resign activePlayer by ternery operator.
-    playerEl0.classList.toggle('player--active');
-    playerEl1.classList.toggle('player--active'); // LEARN TOGGLE😍
+    switchPlayer();
+  }
+});
+
+// click on hold button (Holding button functionality)
+btnHold.addEventListener('click', function () {
+  scores[activePlayer] += currentScore;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+
+  if (scores[activePlayer] >= 20) {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+  } else {
+    switchPlayer();
   }
 });
