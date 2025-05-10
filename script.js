@@ -20,7 +20,7 @@ let scores;
 let playing;
 
 const starting = function () {
-  // these four values are scooped in this starting function. so we should first declare them outside of the starting function without any value and then just reasign it inside the function
+  // these four values are scoped in this starting function. so we should first declare them outside of the starting function without any value and then just reasign it inside the function
   currentScore = 0;
   activePlayer = 0;
   scores = [0, 0];
@@ -51,7 +51,7 @@ btnRoll.addEventListener('click', function () {
   if (playing) {
     const randomNum = Math.floor(Math.random() * 6 + 1);
     diceEl.classList.remove('hidden');
-    diceEl.src = `dice-${randomNum}.png`; // LEARN HOW TO INSERT IMAGE😍
+    diceEl.src = `images/dice-${randomNum}.png`; // LEARN HOW TO INSERT IMAGE😍
     console.log(randomNum);
 
     if (randomNum !== 1) {
@@ -71,7 +71,7 @@ btnHold.addEventListener('click', function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
 
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 50) {
       playing = false;
       diceEl.classList.add('hidden');
       document
