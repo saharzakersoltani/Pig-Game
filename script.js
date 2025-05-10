@@ -1,4 +1,5 @@
 'use strict';
+
 //  Selecting elements:
 const scoreEl0 = document.querySelector('#score--0');
 const scoreEl1 = document.querySelector('#score--1');
@@ -12,14 +13,29 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// to make scores 0 (starting condition)
-scoreEl0.textContent = '0';
-scoreEl1.textContent = '0';
-diceEl.classList.add('hidden');
-let currentScore = 0;
-let activePlayer = 0;
-let scores = [0, 0];
-let playing = true;
+// starting condition
+let currentScore;
+let activePlayer;
+let scores;
+let playing;
+
+const starting = function () {
+  // these four values are scooped in this starting function. so we should first declare them outside of the starting function without any value and then just reasign it inside the function
+  currentScore = 0;
+  activePlayer = 0;
+  scores = [0, 0];
+  playing = true;
+  scoreEl0.textContent = 0;
+  scoreEl1.textContent = 0;
+  currentEl0.textContent = 0;
+  currentEl1.textContent = 0;
+  diceEl.classList.add('hidden');
+  playerEl0.classList.add('player--active');
+  playerEl1.classList.remove('player--active');
+  playerEl0.classList.remove('player--winner');
+  playerEl1.classList.remove('player--winner');
+};
+starting();
 
 // switching player function
 const switchPlayer = function () {
@@ -69,3 +85,13 @@ btnHold.addEventListener('click', function () {
     }
   }
 });
+
+// click on new game button (new game button functionality)
+btnNew.addEventListener('click', starting);
+
+/*
+// it's equal to line two upper line...
+btnNew.addEventListener('click', function(){
+  starting()
+})
+*/
